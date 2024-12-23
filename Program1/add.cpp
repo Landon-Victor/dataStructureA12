@@ -23,7 +23,7 @@ Add::~Add()
 void Add::display()
 {
 	printf(" ******************操   作****************\n");
-	printf("                 0.退出\n");
+	printf("                 -1.退出\n");
 	printf("                 1.随机读入\n");
 	printf("                 2.文件读入\n");
 	printf("                 3.人工输入\n");
@@ -44,9 +44,10 @@ bool Add::loadFromFile(const string& filename)
     g.clear();
 
     string line;
+    size_t pos;
     while (getline(curFile, line))
     {
-        size_t pos = line.find(':');
+        pos = line.find(':');
         if (pos == string::npos)
         {
             continue;
@@ -55,18 +56,31 @@ bool Add::loadFromFile(const string& filename)
         // 获取节点值并添加
         int nodeValue = stoi(line.substr(0, pos));
         g.addNode(nodeValue);
-        
+    }
+    curFile.close();
+    ifstream curFile1(filename);
+    if (!curFile1)
+    {
+        cerr << "无法打开文件: " << filename << endl;
+        return false;
+    }
+    while (getline(curFile1, line))
+    {
+        pos = line.find(':');
+        if (pos == string::npos)
+        {
+            continue;
+        }
+        int nodeValue = stoi(line.substr(0, pos));
         string edges = line.substr(pos + 1);
         istringstream edgeStream(edges);
         string adjValue;
-        while (edgeStream >> adjValue) 
+        while (edgeStream >> adjValue)
         {
-            g.addNode(stoi(adjValue)); 
-            g.addEdge(nodeValue, stoi(adjValue));
+            g.addEdge(nodeValue-1, stoi(adjValue)-1);
         }
     }
-
-    curFile.close();
+    curFile1.close();
 }
 
 // 保存图到文件
@@ -99,6 +113,8 @@ void Add::saveToFile(const string& filename) const
 //人工读入数据
 void Add::inputGraph() 
 {
+    g.clear();
+
     cout << "请输入节点数量: ";
     while (true)
     {

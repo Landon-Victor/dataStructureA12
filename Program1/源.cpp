@@ -13,14 +13,14 @@ int main()
 		bool operFlag = false;
 		Graph g;
 		Add add(g);
+		int cmd = 0;
 		while (!inputFlag)
 		{
 			add.display();
-			int cmd;
 			cout << "请选择读取方式：";
 			cin >> cmd;
-			if (cmd == 0)
-				break;
+			if (cmd == -1)
+				return 0;
 			switch (cmd)
 			{
 			case 1:
@@ -64,16 +64,19 @@ int main()
 				break;
 			}
 			default:
+				cin.clear();
+				while (cin.get() != '\n')
+					continue;
+				printf("！！！非法输入！！！\n请选择正确的序号！\n");
+				Sleep(2000);
 				system("cls");
-				printf("请选择正确的序号！\n");
-				Sleep(1000);
-				system("cls");
-				getchar();
 				break;
 			}
 		}
-
 		Sleep(1000);
+		system("cls");
+		cout << "数据加载成功";
+		Sleep(2000);
 		system("cls");
 		inputFlag = false;
 		bool control = false;
@@ -82,12 +85,10 @@ int main()
 			int cmd = -1;
 			if (!control)
 			{
-				Sleep(1000);
 				system("cls");
-				getchar();
 				printf(" ******************操   作****************\n");
-				printf("                 0.退出\n");
-				printf("                 1.返回上一级\n");
+				printf("                 -1.退出\n");
+				printf("                 1.返回上一级重新读入图\n");
 				printf("                 2.输出图\n");
 				printf("                 3.更改结点的值\n");
 				printf("                 4.查询统计关节点\n");
@@ -97,9 +98,9 @@ int main()
 			}
 			cout << "请选择功能：";
 			cin >> cmd;
-			if (cmd == 0)
+			if (cmd == -1)
 				return 0;
-			else if (cmd == 1)
+			if (cmd == 1)
 				break;
 			switch (cmd)
 			{
@@ -128,7 +129,7 @@ int main()
 					}
 					else
 					{
-						jus=add.g.editNode(n, newval);
+						jus = add.g.editNode(n, newval);
 					}
 				}
 				control = false;
@@ -150,14 +151,14 @@ int main()
 				break;
 			}
 			default:
+				cin.clear();
+				while (cin.get() != '\n')
+					continue;
+				printf("！！！非法输入！！！\n请选择正确的序号！\n");
+				Sleep(2000);
 				system("cls");
-				printf("请选择正确的序号！\n");
-				Sleep(1000);
-				system("cls");
-				getchar();
 				break;
 			}
-
 		}
 		operFlag = false;
 	}

@@ -30,8 +30,8 @@ public:
 	int addNode(int val);						//添加节点
 	bool addEdge(int index1, int index2);			//添加边
 	bool editNode(int n, int newval);			//修改节点
-	//bool deleteNode(int val);					//删除节点
-	//bool deleteEdge(int val1, int val2);		//删除边
+	bool deleteNode(int val);					//删除节点
+	bool deleteEdge(int val1, int val2);		//删除边
 	bool isConnected();                         //确认图连通
 	void dfsConnected(int u, int& counts, bool visited[]);   //确认图连通辅助
 

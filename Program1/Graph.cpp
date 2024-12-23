@@ -26,15 +26,17 @@ Graph::~Graph()
 {
 
 }
+
+//输出图
 void Graph::printGrgph()
 {
 	for (int i = 0; i < numNodes; i++)
 	{
-		cout << "第" << i + 1 << "个结点" << "值为：" << vertexNodes[i].val << "其相邻的结点有：";
+		cout << i + 1 << "号结点" << "值为：" << vertexNodes[i].val << "   相邻的结点编号为：";
 		EdgeNode*temp = vertexNodes[i].firstEdge;
 		while (temp)
 		{
-			cout << temp->adjvex << " ";
+			cout << (temp->adjvex)+1 << "号 ";
 			temp = temp->next;
 		}
 		cout << "\n";
@@ -74,7 +76,7 @@ bool Graph::addEdge(int index1, int index2) {
 		cout << "边两端节点不能相同\n";
 		return false;
 	}
-	EdgeNode* temp = vertexNodes[index1-1].firstEdge;
+	EdgeNode* temp = vertexNodes[index1].firstEdge;
 	while (temp)
 	{
 		if (temp->adjvex == index2)
@@ -84,7 +86,6 @@ bool Graph::addEdge(int index1, int index2) {
 		}
 		temp = temp->next;
 	}
-	temp = vertexNodes[index2].firstEdge;
 	EdgeNode* newEdge1 = new EdgeNode;
 	newEdge1->adjvex = index2; 
 	newEdge1->next = vertexNodes[index1].firstEdge; 
@@ -94,7 +95,7 @@ bool Graph::addEdge(int index1, int index2) {
 	newEdge2->next = vertexNodes[index2].firstEdge; 
 	vertexNodes[index2].firstEdge = newEdge2;
 	numEdges++;
-	cout << "边 (" << index1 << ", " << index2 << ") 添加成功！\n";
+	cout << "边 (" << index1+1 << "号---" << index2+1 << "号) 添加成功！\n";
 	return true;
 }
 //通过val值查找节点的角标
@@ -122,107 +123,107 @@ bool Graph::editNode(int n, int newval)
 }
 
 //删除边
-//bool Graph::deleteEdge(int val1, int val2) 
-//{ 
-//	bool flag = false;
-//	int index1 = searchPoint(val1);
-//	int index2 = searchPoint(val2);
-//	if (index1 == -1)
-//	{
-//		cout << "值为 " << val1 << " 的节点不存在！\n";
-//		return false;
-//	}
-//	if (index2 == -1)
-//	{
-//		cout << "值为 " << val2 << " 的节点不存在！\n";
-//		return false;
-//	}
-//	//删除val1中的边
-//	EdgeNode* temp = vertexNodes[index1].firstEdge;
-//	EdgeNode* temp1 = temp;
-//	if (temp == nullptr)
-//	{
-//		cout << "想要删除的边不存在\n";
-//		return false;
-//	}
-//	if (temp->adjvex == index2)
-//	{
-//		vertexNodes[index1].firstEdge = temp->next;
-//		flag = true;
-//	}
-//	while (temp != nullptr && !flag)
-//	{
-//		if (temp->adjvex == index2)
-//		{
-//			temp1->next = temp->next;
-//			flag = true;
-//			break;
-//		}
-//		temp1 = temp;
-//		temp = temp->next;
-//	}
-//	if (!flag)
-//	{
-//		cout << "想要删除的边不存在\n";
-//		return false;
-//	}
-//	//删除val2中的边
-//	flag = false;
-//    temp = vertexNodes[index2].firstEdge;
-//    temp1 = temp;
-//	if (temp->adjvex == index1)
-//	{
-//		vertexNodes[index2].firstEdge = temp->next;
-//		flag = true;
-//	}
-//	while (temp != nullptr && !flag)
-//	{
-//		if (temp->adjvex == index2)
-//		{
-//			temp1->next = temp->next;
-//			break;
-//		}
-//		temp1 = temp;
-//		temp = temp->next;
-//	}
-//	--numEdges;
-//	cout << "值为" << val1 << "的结点到值为" << val2 << "的结点的边已被删除\n";
-//	return true;
-//}
-//
-////删除节点
-//bool Graph::deleteNode(int val)
-//{
-//	int index = searchPoint(val);
-//	if (index == -1)
-//	{
-//		cout << "值为 " << val << " 的节点不存在！\n";
-//		return false;
-//	}
-//	while (vertexNodes[index].firstEdge != nullptr)
-//	{
-//		deleteEdge(vertexNodes[vertexNodes[index].firstEdge->adjvex].val,val);
-//	}
-//	for (int i = index;i <= numNodes - 2;i++)
-//	{
-//		vertexNodes[i] = vertexNodes[i + 1];
-//	}
-//	--numNodes;
-//	EdgeNode* temp;
-//	for (int i = 0;i <= numNodes - 1;i++)
-//	{
-//		temp = vertexNodes[i].firstEdge;
-//		while (temp != nullptr)
-//		{
-//			if (temp->adjvex > index) {
-//				--temp->adjvex;
-//			}
-//			temp = temp->next;
-//		}
-//	}
-//	cout << "值为" << val << "的结点已被删除\n";
-//	return true;
-//}
+bool Graph::deleteEdge(int val1, int val2) 
+{ 
+	bool flag = false;
+	int index1 = searchPoint(val1);
+	int index2 = searchPoint(val2);
+	if (index1 == -1)
+	{
+		cout << "值为 " << val1 << " 的节点不存在！\n";
+		return false;
+	}
+	if (index2 == -1)
+	{
+		cout << "值为 " << val2 << " 的节点不存在！\n";
+		return false;
+	}
+	//删除val1中的边
+	EdgeNode* temp = vertexNodes[index1].firstEdge;
+	EdgeNode* temp1 = temp;
+	if (temp == nullptr)
+	{
+		cout << "想要删除的边不存在\n";
+		return false;
+	}
+	if (temp->adjvex == index2)
+	{
+		vertexNodes[index1].firstEdge = temp->next;
+		flag = true;
+	}
+	while (temp != nullptr && !flag)
+	{
+		if (temp->adjvex == index2)
+		{
+			temp1->next = temp->next;
+			flag = true;
+			break;
+		}
+		temp1 = temp;
+		temp = temp->next;
+	}
+	if (!flag)
+	{
+		cout << "想要删除的边不存在\n";
+		return false;
+	}
+	//删除val2中的边
+	flag = false;
+    temp = vertexNodes[index2].firstEdge;
+    temp1 = temp;
+	if (temp->adjvex == index1)
+	{
+		vertexNodes[index2].firstEdge = temp->next;
+		flag = true;
+	}
+	while (temp != nullptr && !flag)
+	{
+		if (temp->adjvex == index2)
+		{
+			temp1->next = temp->next;
+			break;
+		}
+		temp1 = temp;
+		temp = temp->next;
+	}
+	--numEdges;
+	cout << "值为" << val1 << "的结点到值为" << val2 << "的结点的边已被删除\n";
+	return true;
+}
+
+//删除节点
+bool Graph::deleteNode(int val)
+{
+	int index = searchPoint(val);
+	if (index == -1)
+	{
+		cout << "值为 " << val << " 的节点不存在！\n";
+		return false;
+	}
+	while (vertexNodes[index].firstEdge != nullptr)
+	{
+		deleteEdge(vertexNodes[vertexNodes[index].firstEdge->adjvex].val,val);
+	}
+	for (int i = index;i <= numNodes - 2;i++)
+	{
+		vertexNodes[i] = vertexNodes[i + 1];
+	}
+	--numNodes;
+	EdgeNode* temp;
+	for (int i = 0;i <= numNodes - 1;i++)
+	{
+		temp = vertexNodes[i].firstEdge;
+		while (temp != nullptr)
+		{
+			if (temp->adjvex > index) {
+				--temp->adjvex;
+			}
+			temp = temp->next;
+		}
+	}
+	cout << "值为" << val << "的结点已被删除\n";
+	return true;
+}
 
 //DFS_确认图为连通图
 void Graph::dfsConnected(int u, int& counts, bool visited[])
