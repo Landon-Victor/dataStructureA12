@@ -32,6 +32,8 @@ public:
 	bool editNode(int n, int newval);			//修改节点
 	//bool deleteNode(int val);					//删除节点
 	//bool deleteEdge(int val1, int val2);		//删除边
+	bool isConnected();                         //确认图连通
+	void dfsConnected(int u, int& counts, bool visited[]);   //确认图连通辅助
 
 	int searchPoint(int n);//通过val值查找点的下标
 

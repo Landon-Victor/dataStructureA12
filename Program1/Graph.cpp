@@ -223,6 +223,41 @@ bool Graph::editNode(int n, int newval)
 //	cout << "值为" << val << "的结点已被删除\n";
 //	return true;
 //}
+
+//DFS_确认图为连通图
+void Graph::dfsConnected(int u, int& counts, bool visited[])
+{
+	++counts;
+	visited[u] = true;
+	int v;
+	EdgeNode* temp = vertexNodes[u].firstEdge;
+	while (temp != nullptr)
+	{
+		v = temp->adjvex;
+		if (visited[v]) {}
+		else {
+			dfsConnected(v, counts, visited);
+		}
+		temp = temp->next;
+	}
+}
+
+//确认图为连通图
+bool Graph::isConnected()
+{
+	int counts = 0;
+	bool* visited = new bool[numNodes];
+	for (int i = 0;i <= numNodes - 1;i++)
+		visited[i] = false;
+	dfsConnected(0, counts, visited);
+	delete visited;
+	if (counts == numNodes) {
+		return true;
+	}
+	cout << "您输入的不是连通图！！！\n";
+	return false;
+}
+
 //DFS查找关节点
 void Graph::articuPointUtil(int u, bool visited[], int depth[], int low[], int parent[], int curDepth, bool articuPoints[])
 {
