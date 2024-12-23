@@ -25,8 +25,20 @@ int main()
 			{
 			case 1:
 			{
-				/*随机读入*/
-				cout << "正在随机读入。。。" << endl;
+				Add add(g);
+				// 调用随机输入函数，设置节点数量范围为5到20，边数量上限为50，可按需调整参数
+				std::cout << "尝试进行随机图输入..." << std::endl;
+				if (add.randomInput(5, 20, 50)) {
+					inputFlag = true;
+					std::cout << "已完成随机图输入，可进行后续操作。" << std::endl;
+				}
+				else {
+					// 如果随机输入失败，可以在这里添加相应的提示处理逻辑，比如提示用户重新选择等
+					system("cls");
+					printf("随机图输入失败，请重新选择操作方式！\n");
+					Sleep(1000);
+					system("cls");
+				}
 				break;
 			}
 			case 2:
