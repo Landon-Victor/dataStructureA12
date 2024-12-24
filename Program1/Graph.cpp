@@ -61,12 +61,12 @@ int Graph::addNode(int val) {
 
 //添加边
 bool Graph::addEdge(int index1, int index2) {
-	if (index1<0||index1>numNodes) 
+	if (index1<0||index1>=numNodes) 
 	{
 		cout <<" 结点一不存在\n";
 		return false;
 	}
-	if (index2<0 || index2>numNodes)
+	if (index2<0 || index2>=numNodes)
 	{
 		cout << "结点二不存在\n";
 		return false;

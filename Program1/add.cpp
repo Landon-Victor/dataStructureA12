@@ -93,21 +93,13 @@ void Add::saveToFile(const string& filename) const
         EdgeNode* temp = g.vertexNodes[i].firstEdge;
         while (temp != NULL)
         {
-            printf("%d\n", temp->adjvex);
-            if (temp->adjvex >= 0 && temp->adjvex < g.numNodes)
-            {
-                curFile << " " << g.vertexNodes[temp->adjvex].val;
-            }
-            else
-            {
-                // 如果 adjvex 不合法，处理错误  
-                std::cerr << "Error: Invalid adjacent vertex index: " << temp->adjvex << std::endl;
-            }
+            curFile << " " << (temp->adjvex) + 1;
             temp = temp->next;
         }
         curFile << endl;
     }
     curFile.close();
+    cout << "当前图的数据已成功保存至文件" << filename << endl;
 }
 
 //人工读入数据
@@ -118,30 +110,85 @@ void Add::inputGraph()
     cout << "请输入节点数量: ";
     while (true)
     {
-        cin >> g.numNodes;
-        if (g.numNodes > MAX_VEX)
+        if (cin >> g.numNodes)
         {
-            cerr << "节点数量超过最大限制: " << MAX_VEX << endl;
-            cout << "请重新输入:";
+            if (g.numNodes > MAX_VEX)
+            {
+                cerr << "节点数量超过最大限制: " << MAX_VEX << endl;
+                cout << "请重新输入:";
+            }
+            else break;
         }
-        else break;
+        else 
+        {
+            cin.clear();
+            while (cin.get() != '\n')
+                continue;
+            printf("！！！非法输入！！！\n请重新输入！\n");
+        }
+        
     }
     // 输入每个节点的值
     for (int i = 0; i < g.numNodes; ++i) 
     {
-        cout << "请输入节点 " << i + 1 << " 的值: ";
-        cin >> g.vertexNodes[i].val;
+        cout << "请输入编号为 " << i + 1 << "号结点的值: ";
+        if (cin >> g.vertexNodes[i].val) {}
+        else
+        {
+            cin.clear();
+            while (cin.get() != '\n')
+                continue;
+            printf("！！！非法输入！！！\n请重新输入！\n");
+            --i;
+        }
     }
     cout << "请输入边的数量: "; 
     int num=0;
-    cin >>num;
+    while (true) 
+    {
+        if (cin >> num) break;
+        else
+        {
+            cin.clear();
+            while (cin.get() != '\n')
+                continue;
+            printf("！！！非法输入！！！\n请重新输入！\n");
+        }
+    }
     // 输入每条边
     for (int i = 0; i < num; ++i) 
     {
         int u, v;
-        cout << "请输入边 " << i + 1 << " 的两个端点 (格式: u v): ";
-        cin >> u >> v;
-        g.addEdge(u, v);
+        cout << "请输入边 " << i + 1 << " 的两个端点的编号 (格式: u v): ";
+        while (true)
+        {
+            cout << "aaa";
+            if (cin >> u >> v) 
+            {
+                if (u <= 0 || u > g.numNodes) 
+                {
+                    cout << "！！！非法输入！！！\n请重新输入\n";
+                }
+                else if (v <= 0 || v > g.numNodes)
+                {
+                    cout << "！！！非法输入！！！\n请重新输入\n";
+                }
+                else
+                {
+                    g.addEdge(u - 1, v - 1);
+                    //while循环唯一出口
+                    break;
+                }
+            }
+            else
+            {
+                cin.clear();
+                while (cin.get() != '\n')
+                    continue;
+                printf("！！！非法输入！！！\n请重新输入！\n");
+            }
+            cout << "请输入边 " << i + 1 << " 的两个端点的编号 (格式: u v): ";
+        }
     }
     cout << "图输入完成!!!" << endl;
 }

@@ -73,7 +73,7 @@ int main()
 				break;
 			}
 		}
-		Sleep(1000);
+		Sleep(2000);
 		system("cls");
 		cout << "数据加载成功";
 		Sleep(2000);
