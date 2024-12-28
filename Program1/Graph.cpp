@@ -314,13 +314,13 @@ void Graph::searchArticuPoint()
 			articuPointUtil(i, visited, depth, low, parent, 0, this->articuPoints);
 		}
 	}
-	for (int i = 0; i < numNodes; i++)
-	{
-		if (articuPoints[i])
-		{
-			cout << i + 1;
-		}
-	}
+	//for (int i = 0; i < numNodes; i++)
+	//{
+	//	if (articuPoints[i])
+	//	{
+	//		cout << i + 1;
+	//	}
+	//}
 }
 //列出关节点
 void Graph::displayArticuPoint()
@@ -347,7 +347,7 @@ void Graph::displayArticuPoint()
 //此函数用于将关节点转换为非关节点
 void Graph::articulareModify(int n)
 {
-	if (!articuPoints[n])
+	if (!articuPoints[n-1])
 	{
 		cout << "该结点不是关节点，请重新选择";
 		return;
@@ -362,7 +362,7 @@ void Graph::articulareModify(int n)
 			v = v->next;
 		}
 	}
-	articuPoints[n] = 0;
+	articuPoints[n-1] = 0;
 	cout << "更改成功";
 	return;
 }

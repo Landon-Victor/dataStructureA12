@@ -143,11 +143,12 @@ int main()
 			}
 			case 5:
 			{
+
 				int n;
 				cout << "请输入关节点的序号:";
 				cin >> n;
 				add.g.articulareModify(n);
-				control = false;
+				control = true;
 				break;
 			}
 			default:

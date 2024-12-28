@@ -40,9 +40,7 @@ bool Add::loadFromFile(const string& filename)
         cerr << "无法打开文件: " << filename << endl;
         return false;
     }
-
     g.clear();
-
     string line;
     size_t pos;
     while (getline(curFile, line))
@@ -52,7 +50,6 @@ bool Add::loadFromFile(const string& filename)
         {
             continue;
         }
-
         // 获取节点值并添加
         int nodeValue = stoi(line.substr(0, pos));
         g.addNode(nodeValue);
@@ -162,7 +159,7 @@ void Add::inputGraph()
         cout << "请输入边 " << i + 1 << " 的两个端点的编号 (格式: u v): ";
         while (true)
         {
-            cout << "aaa";
+          //  cout << "aaa";
             if (cin >> u >> v) 
             {
                 if (u <= 0 || u > g.numNodes) 
