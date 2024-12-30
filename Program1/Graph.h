@@ -35,7 +35,7 @@ public:
 	bool isConnected();                         //确认图连通
 	void dfsConnected(int u, int& counts, bool visited[]);   //确认图连通辅助
 
-	int searchPoint(int n);//通过val值查找点的下标
+	int searchPoint(int n);         //通过val值查找点的下标
 
 	void articuPointUtil(int u, bool visited[], int depth[], int low[], int parent[],int curDepth, bool articuPoints[]);	//DFS查找关节点
 	void searchArticuPoint();		//查找关节点

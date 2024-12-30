@@ -26,18 +26,25 @@ int main()
 			case 1:
 			{
 				Add add(g);
-				// 调用随机输入函数，设置节点数量范围为5到20，边数量上限为50，可按需调整参数
-				std::cout << "尝试进行随机图输入..." << std::endl;
-				if (add.randomInput(5, 20, 50)) {
-					inputFlag = true;
-					std::cout << "已完成随机图输入，可进行后续操作。" << std::endl;
+				int minNodes, maxNodes, maxEdges;
+				std::cout << "请输入最小节点数 (minNodes): ";
+				std::cin >> minNodes;
+				std::cout << "请输入最大节点数 (maxNodes): ";
+				std::cin >> maxNodes;
+				std::cout << "请输入最大边数 (maxEdges): ";
+				std::cin >> maxEdges;
+
+				if (minNodes >= 0 && maxNodes >= minNodes && maxEdges >= 0) {
+					std::cout << "尝试进行随机图输入..." << std::endl;
+					if (add.randomInput(minNodes, maxNodes, maxEdges)) {
+						std::cout << "已完成随机图输入，可进行后续操作。" << std::endl;
+					}
+					else {
+						std::cout << "随机图输入失败，请重新选择操作方式！" << std::endl;
+					}
 				}
 				else {
-					// 如果随机输入失败，可以在这里添加相应的提示处理逻辑，比如提示用户重新选择等
-					system("cls");
-					printf("随机图输入失败，请重新选择操作方式！\n");
-					Sleep(1000);
-					system("cls");
+					std::cout << "输入不合法，请确保 0 <= minNodes <= maxNodes 且 maxEdges >= 0。" << std::endl;
 				}
 				break;
 			}

@@ -231,7 +231,7 @@ bool Add::randomInput(int minNodes, int maxNodes, int maxEdges) {
             if (!isConnected()) {
                 g.deleteEdge(g.vertexNodes[u].val, g.vertexNodes[v].val);
             }
-        } while (!isConnected());
+        } while (isConnected());
     }
 
     return true;
@@ -249,11 +249,11 @@ bool Add::isConnected() {
         int current = q.front();
         q.pop();
 
-        int m = searchPoint(current);
+        int m = g.searchPoint(current);
         EdgeNode* temp = g.vertexNodes[m].firstEdge;
         while (temp != NULL) {
             int adjNode = g.vertexNodes[temp->adjvex].val;
-            int adjIndex = searchPoint(adjNode);
+            int adjIndex = g.searchPoint(adjNode);
             if (!visited[adjIndex]) {
                 visited[adjIndex] = true;
                 q.push(adjNode);
