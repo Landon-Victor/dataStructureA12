@@ -25,20 +25,20 @@ int main()
 			{
 			case 1:
 			{
-				//Add add(g);
-				//// 调用随机输入函数，设置节点数量范围为5到20，边数量上限为50，可按需调整参数
-				//std::cout << "尝试进行随机图输入..." << std::endl;
-				//if (add.randomInput(5, 20, 50)) {
-				//	inputFlag = true;
-				//	std::cout << "已完成随机图输入，可进行后续操作。" << std::endl;
-				//}
-				//else {
-				//	// 如果随机输入失败，可以在这里添加相应的提示处理逻辑，比如提示用户重新选择等
-				//	system("cls");
-				//	printf("随机图输入失败，请重新选择操作方式！\n");
-				//	Sleep(1000);
-				//	system("cls");
-				//}
+				Add add(g);
+				// 调用随机输入函数，设置节点数量范围为5到20，边数量上限为50，可按需调整参数
+				std::cout << "尝试进行随机图输入..." << std::endl;
+				if (add.randomInput(5, 20, 50)) {
+					inputFlag = true;
+					std::cout << "已完成随机图输入，可进行后续操作。" << std::endl;
+				}
+				else {
+					// 如果随机输入失败，可以在这里添加相应的提示处理逻辑，比如提示用户重新选择等
+					system("cls");
+					printf("随机图输入失败，请重新选择操作方式！\n");
+					Sleep(1000);
+					system("cls");
+				}
 				break;
 			}
 			case 2:
@@ -73,6 +73,9 @@ int main()
 				break;
 			}
 		}
+
+
+
 		Sleep(2000);
 		system("cls");
 		cout << "数据加载成功";
@@ -80,6 +83,9 @@ int main()
 		system("cls");
 		inputFlag = false;
 		bool control = false;
+
+
+
 		while (!operFlag)
 		{
 			int cmd = -1;
@@ -90,9 +96,14 @@ int main()
 				printf("                 -1.退出\n");
 				printf("                 1.返回上一级重新读入图\n");
 				printf("                 2.输出图\n");
-				printf("                 3.更改结点的值\n");
-				printf("                 4.查询统计关节点\n");
-				printf("                 5.将关节点转化为非关节点\n");
+				printf("                 3.更改结点的信息\n");
+				printf("                 4.添加新结点\n");
+				printf("                 5.添加新边\n");
+				printf("                 6.删除某结点\n");
+				printf("                 7.删除某边\n");
+				printf("                 8.查询某结点信息\n");
+				printf("                 9.查询统计关节点\n");
+				printf("                 10.将关节点转化为非关节点\n");
 				printf(" ******************************************\n");
 				printf("\n");
 			}
@@ -137,13 +148,101 @@ int main()
 			}
 			case 4:
 			{
-				add.g.displayArticuPoint();
-				control = true;
+				cout << "请输入新节点的值\n";
+				int val = 0;
+				while (!(cin >> val))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+				}
+				if (!add.g.addNode(val))
+					cout << "添加新结点失败";
 				break;
 			}
 			case 5:
 			{
-
+				cout << "请输入新边的两端点编号（空格分开）\n";
+				int u = 0, v = 0;
+				while (!(cin >> u >> v))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+				}
+				if (!add.g.addEdge(u - 1, v - 1))
+					cout << "添加新边失败";
+				break;
+			}
+			case 6:
+			{
+				cout << "请输入要删除结点的编号\n";
+				int n=0;
+				while (!(cin >> n))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+				}
+				if (!(add.g.deleteNode(n - 1)))
+					cout << "删除结点失败";
+				break;
+			}
+			case 7:
+			{
+				cout << "请输入要删除边的两端点编号（空格隔开）\n";
+				int u = 0, v = 0;
+				while (!(cin >> u >> v))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+				}
+				if (add.g.deleteEdge(u - 1, v - 1)) 
+					cout << "编号为" << u << "的结点与编号为" << v << "的结点的边已被删除\n";
+				else
+					cout << "添加新边失败";
+				break;
+			}
+			case 8:
+			{
+				cout << "请输入要查询结点的编号\n";
+				int n = 0;
+				cin >> n;
+				while (!(cin >> n))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+				}
+				cout << "当前结点的值为" << add.g.valRetrun(n) << endl;
+				break;
+			}
+			case 9:
+			{
+				if (!add.g.isConnected())
+				{
+					cout << "当前图仍不连通，请进行添加边等操作更改图";
+					control = true;
+					break;
+				}
+				add.g.displayArticuPoint();
+				control = true;
+				break;
+			}
+			case 10:
+			{
+				if (!add.g.isConnected())
+				{
+					cout << "当前图仍不连通，请进行添加边等操作更改图";
+					control = true;
+					break;
+				}
 				int n;
 				cout << "请输入关节点的序号:";
 				cin >> n;
@@ -152,6 +251,7 @@ int main()
 				break;
 			}
 			default:
+				cout << "default";
 				cin.clear();
 				while (cin.get() != '\n')
 					continue;
@@ -163,8 +263,5 @@ int main()
 		}
 		operFlag = false;
 	}
-	
-
-
 	return 0;
 }

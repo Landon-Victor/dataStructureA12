@@ -39,9 +39,15 @@ void Graph::printGrgph()
 			cout << (temp->adjvex)+1 << "号 ";
 			temp = temp->next;
 		}
-		cout << "\n";
+		cout << endl;
 	 }
+	cout << "当前图";
+	if (isConnected())
+		cout << "连通\n";
+	else
+		cout << "不连通\n";
 }
+//返回结点信息
 int Graph::valRetrun(int n)
 {
 	return vertexNodes[n-1].val;
@@ -107,11 +113,11 @@ int Graph::searchPoint(int val)
 	}
 	return -1;
 }
-//修改val为n的节点的val为newval
+//修改编号为n的节点的val为newval
 bool Graph::editNode(int n, int newval)
 {
 	if (n<=numNodes&&n>0) {
-		vertexNodes[n].val = newval;
+		vertexNodes[n-1].val = newval;
 		cout << "修改成功\n";
 		return true;
 	}
@@ -123,22 +129,20 @@ bool Graph::editNode(int n, int newval)
 }
 
 //删除边
-bool Graph::deleteEdge(int val1, int val2) 
+bool Graph::deleteEdge(int index1, int index2) 
 { 
 	bool flag = false;
-	int index1 = searchPoint(val1);
-	int index2 = searchPoint(val2);
-	if (index1 == -1)
+	if (index1<0||index1>=numNodes)
 	{
-		cout << "值为 " << val1 << " 的节点不存在！\n";
+		cout << "编号为 " << index1+1<< " 的结点不存在！\n";
 		return false;
 	}
-	if (index2 == -1)
+	if (index2 < 0 || index2 >= numNodes)
 	{
-		cout << "值为 " << val2 << " 的节点不存在！\n";
+		cout << "编号为 " << index2+1 << " 的结点不存在！\n";
 		return false;
 	}
-	//删除val1中的边
+	//删除index1中的边
 	EdgeNode* temp = vertexNodes[index1].firstEdge;
 	EdgeNode* temp1 = temp;
 	if (temp == nullptr)
@@ -146,11 +150,13 @@ bool Graph::deleteEdge(int val1, int val2)
 		cout << "想要删除的边不存在\n";
 		return false;
 	}
+	//处理头结点情况
 	if (temp->adjvex == index2)
 	{
 		vertexNodes[index1].firstEdge = temp->next;
 		flag = true;
 	}
+
 	while (temp != nullptr && !flag)
 	{
 		if (temp->adjvex == index2)
@@ -167,7 +173,7 @@ bool Graph::deleteEdge(int val1, int val2)
 		cout << "想要删除的边不存在\n";
 		return false;
 	}
-	//删除val2中的边
+	//删除index2中的边
 	flag = false;
     temp = vertexNodes[index2].firstEdge;
     temp1 = temp;
@@ -187,29 +193,32 @@ bool Graph::deleteEdge(int val1, int val2)
 		temp = temp->next;
 	}
 	--numEdges;
-	cout << "值为" << val1 << "的结点到值为" << val2 << "的结点的边已被删除\n";
+	//cout << "编号为" << index1+1 << "的结点与编号为" << index2+1 << "的结点的边已被删除\n";
 	return true;
 }
 
 //删除节点
-bool Graph::deleteNode(int val)
+bool Graph::deleteNode(int index)
 {
-	int index = searchPoint(val);
-	if (index == -1)
+	cout << "faef";
+	if (index<0||index>=numNodes)
 	{
-		cout << "值为 " << val << " 的节点不存在！\n";
+		cout << "编号为 " << index+1 << " 的结点不存在！\n";
 		return false;
 	}
+	//头删
 	while (vertexNodes[index].firstEdge != nullptr)
 	{
-		deleteEdge(vertexNodes[vertexNodes[index].firstEdge->adjvex].val,val);
+		deleteEdge(vertexNodes[index].firstEdge->adjvex,index);
 	}
+	//挪位
 	for (int i = index;i <= numNodes - 2;i++)
 	{
 		vertexNodes[i] = vertexNodes[i + 1];
 	}
 	--numNodes;
 	EdgeNode* temp;
+	//修改index后所有结点的下标
 	for (int i = 0;i <= numNodes - 1;i++)
 	{
 		temp = vertexNodes[i].firstEdge;
@@ -221,7 +230,7 @@ bool Graph::deleteNode(int val)
 			temp = temp->next;
 		}
 	}
-	cout << "值为" << val << "的结点已被删除\n";
+	cout << "编号为" << index+1 << "的结点已被删除\n";
 	return true;
 }
 
@@ -255,7 +264,7 @@ bool Graph::isConnected()
 	if (counts == numNodes) {
 		return true;
 	}
-	cout << "您输入的不是连通图！！！\n";
+	// << "您输入的不是连通图！！！\n";
 	return false;
 }
 
