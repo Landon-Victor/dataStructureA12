@@ -52,6 +52,11 @@ int Graph::valRetrun(int n)
 {
 	return vertexNodes[n-1].val;
 }
+//返回顶点数目
+int Graph::numnodeReturn()
+{
+	return numNodes;
+}
 //添加节点
 int Graph::addNode(int val) {
 	if (numNodes < MAX_VEX) {
@@ -66,6 +71,27 @@ int Graph::addNode(int val) {
 }
 
 //添加边
+bool Graph::addEdgeonly(int index1, int index2)
+{
+	EdgeNode* temp = vertexNodes[index1].firstEdge;
+	while (temp)
+	{
+		if (temp->adjvex == index2)
+		{
+			return false;
+		}
+		temp = temp->next;
+	}
+	EdgeNode* newEdge1 = new EdgeNode;
+	newEdge1->adjvex = index2;
+	newEdge1->next = vertexNodes[index1].firstEdge;
+	vertexNodes[index1].firstEdge = newEdge1;
+	EdgeNode* newEdge2 = new EdgeNode;
+	newEdge2->adjvex = index1;
+	newEdge2->next = vertexNodes[index2].firstEdge;
+	vertexNodes[index2].firstEdge = newEdge2;
+	numEdges++;
+}
 bool Graph::addEdge(int index1, int index2) {
 	if (index1<0||index1>=numNodes) 
 	{
@@ -82,25 +108,7 @@ bool Graph::addEdge(int index1, int index2) {
 		cout << "边两端节点不能相同\n";
 		return false;
 	}
-	EdgeNode* temp = vertexNodes[index1].firstEdge;
-	while (temp)
-	{
-		if (temp->adjvex == index2)
-		{
-			cout << "该边已存在\n";
-			return false;
-		}
-		temp = temp->next;
-	}
-	EdgeNode* newEdge1 = new EdgeNode;
-	newEdge1->adjvex = index2; 
-	newEdge1->next = vertexNodes[index1].firstEdge; 
-	vertexNodes[index1].firstEdge = newEdge1;
-	EdgeNode* newEdge2 = new EdgeNode;
-	newEdge2->adjvex = index1; 
-	newEdge2->next = vertexNodes[index2].firstEdge; 
-	vertexNodes[index2].firstEdge = newEdge2;
-	numEdges++;
+	addEdgeonly(index1, index2);
 	cout << "边 (" << index1+1 << "号---" << index2+1 << "号) 添加成功！\n";
 	return true;
 }
@@ -200,7 +208,6 @@ bool Graph::deleteEdge(int index1, int index2)
 //删除节点
 bool Graph::deleteNode(int index)
 {
-	cout << "faef";
 	if (index<0||index>=numNodes)
 	{
 		cout << "编号为 " << index+1 << " 的结点不存在！\n";
@@ -323,13 +330,7 @@ void Graph::searchArticuPoint()
 			articuPointUtil(i, visited, depth, low, parent, 0, this->articuPoints);
 		}
 	}
-	//for (int i = 0; i < numNodes; i++)
-	//{
-	//	if (articuPoints[i])
-	//	{
-	//		cout << i + 1;
-	//	}
-	//}
+	
 }
 //列出关节点
 void Graph::displayArticuPoint()
@@ -353,21 +354,22 @@ void Graph::displayArticuPoint()
 		cout << "\n共有" << num << "个关节点\n";
 	}
 }
-//此函数用于将关节点转换为非关节点
+
 void Graph::articulareModify(int n)
 {
+	searchArticuPoint();
 	if (!articuPoints[n-1])
 	{
 		cout << "该结点不是关节点，请重新选择";
 		return;
 	}
-	EdgeNode*u = vertexNodes[n].firstEdge;
+	EdgeNode*u = vertexNodes[n-1].firstEdge;
 	for (; u; u = u->next)
 	{
 		EdgeNode* v = u->next;
 		while (v)
 		{
-			addEdge(v->adjvex, u->adjvex);
+			addEdgeonly(v->adjvex, u->adjvex);
 			v = v->next;
 		}
 	}

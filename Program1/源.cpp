@@ -16,6 +16,7 @@ int main()
 		int cmd = 0;
 		while (!inputFlag)
 		{
+			system("cls");
 			add.display();
 			cout << "请选择读取方式：";
 			cin >> cmd;
@@ -91,6 +92,7 @@ int main()
 			int cmd = -1;
 			if (!control)
 			{
+				Sleep(2000);
 				system("cls");
 				printf(" ******************操   作****************\n");
 				printf("                 -1.退出\n");
@@ -141,6 +143,7 @@ int main()
 					else
 					{
 						jus = add.g.editNode(n, newval);
+						cout << "修改成功\n";
 					}
 				}
 				control = false;
@@ -158,7 +161,9 @@ int main()
 					printf("！！！非法输入！！！\n请重新输入！\n");
 				}
 				if (!add.g.addNode(val))
-					cout << "添加新结点失败";
+					cout << "添加新节点失败";
+				else
+					cout << "添加新节点成功\n";
 				break;
 			}
 			case 5:
@@ -172,8 +177,11 @@ int main()
 						continue;
 					printf("！！！非法输入！！！\n请重新输入！\n");
 				}
+	
 				if (!add.g.addEdge(u - 1, v - 1))
 					cout << "添加新边失败";
+				else
+					cout << "添加边成功\n";
 				break;
 			}
 			case 6:
@@ -202,17 +210,19 @@ int main()
 						continue;
 					printf("！！！非法输入！！！\n请重新输入！\n");
 				}
-				if (add.g.deleteEdge(u - 1, v - 1)) 
+				if (add.g.deleteEdge(u - 1, v - 1))
+				{
 					cout << "编号为" << u << "的结点与编号为" << v << "的结点的边已被删除\n";
+				}
 				else
-					cout << "添加新边失败";
+					cout << "删除边失败";
+				control = false;
 				break;
 			}
 			case 8:
 			{
 				cout << "请输入要查询结点的编号\n";
 				int n = 0;
-				cin >> n;
 				while (!(cin >> n))
 				{
 					cin.clear();
@@ -220,15 +230,20 @@ int main()
 						continue;
 					printf("！！！非法输入！！！\n请重新输入！\n");
 				}
-				cout << "当前结点的值为" << add.g.valRetrun(n) << endl;
+				if (n >add.g.numnodeReturn()||n<=0)
+				{
+					cout << "输入违法，" << "请输入1~" << add.g.numnodeReturn() << "之间的数字\n";
+				}
+				else cout <<"第"<<n<<"个节点的值为"<< add.g.valRetrun(n) << endl;
+				control = false;
 				break;
 			}
 			case 9:
 			{
 				if (!add.g.isConnected())
 				{
-					cout << "当前图仍不连通，请进行添加边等操作更改图";
-					control = true;
+					cout << "当前图仍不连通，请进行添加边等操作更改图\n";
+					control = false;
 					break;
 				}
 				add.g.displayArticuPoint();
@@ -239,15 +254,14 @@ int main()
 			{
 				if (!add.g.isConnected())
 				{
-					cout << "当前图仍不连通，请进行添加边等操作更改图";
-					control = true;
+					cout << "当前图仍不连通，请进行添加边等操作更改图\n";
 					break;
 				}
 				int n;
 				cout << "请输入关节点的序号:";
 				cin >> n;
 				add.g.articulareModify(n);
-				control = true;
+			    control = false;;
 				break;
 			}
 			default:
