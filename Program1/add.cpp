@@ -192,9 +192,9 @@ void Add::inputGraph()
     }
     cout << "图输入完成!!!" << endl;
 }
-// 随机输入图的节点和边信息，确保生成的图是连通图，并在设定范围内
+
 bool Add::randomInput(int minNodes, int maxNodes, int maxEdges) {
-    // 设置随机数种子，保证每次运行生成的随机序列不同（基于当前时间）
+    // 设置随机数种子，保证每次运行生成的随机序列不同（基于当前时间
     srand(static_cast<unsigned int>(time(nullptr)));
 
     // 随机生成节点数量，范围在minNodes到maxNodes之间
@@ -203,7 +203,7 @@ bool Add::randomInput(int minNodes, int maxNodes, int maxEdges) {
 
     // 随机生成每个节点的值，并添加节点
     for (int i = 0; i < numNodes; ++i) {
-        int nodeValue = rand(); // 这里简单地用随机整数作为节点值，可根据实际需求调整
+        int nodeValue = i; 
         g.addNode(nodeValue);
     }
 
@@ -220,20 +220,16 @@ bool Add::randomInput(int minNodes, int maxNodes, int maxEdges) {
     // 随机添加剩余的边，要确保边连接的节点是已存在的节点，且添加后图依然保持连通
     for (int i = currentEdges; i < numEdges; ++i) {
         int u, v;
-        do {
-            u = rand() % numNodes;
-            v = rand() % numNodes;
-            while (u == v) { // 避免自环边，重新选择节点
-                v = rand() % numNodes;
-            }
-            g.addEdge(g.vertexNodes[u].val, g.vertexNodes[v].val);
-            // 检查图是否依然连通（使用BFS来验证），如果不连通则撤回这条边的添加，重新选择节点生成边
-            if (!isConnected()) {
-                g.deleteEdge(g.vertexNodes[u].val, g.vertexNodes[v].val);
-            }
-        } while (isConnected());
+        u = rand() % numNodes;
+        v = rand() % numNodes;
+        while (u == v||u==0||v==0) { // 避免自环边，重新选择节点
+           v = rand() % numNodes;
+           u = rand() % numNodes;
+        }
+        g.vertexNodes[u].val = u;
+        g.vertexNodes[v].val = v;
+        g.addEdge(g.vertexNodes[u].val, g.vertexNodes[v].val);
     }
-
     return true;
 }
 
