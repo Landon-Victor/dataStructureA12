@@ -29,6 +29,7 @@ public:
 	~Graph();
 	int addNode(int val);						//添加节点
 	bool addEdge(int index1, int index2);			//添加边
+	bool addEdgeonly(int index1, int index2);
 	bool editNode(int n, int newval);			//修改节点
 	bool deleteNode(int val);					//删除节点
 	bool deleteEdge(int val1, int val2);		//删除边
@@ -44,6 +45,7 @@ public:
 	void clear();					//清空图
 	void printGrgph();             //输出图
 	int valRetrun(int n);
+	int numnodeReturn();//返回节点数目
 private:
 	VertexNode vertexNodes[MAX_VEX];	//顶点数组
 	int numNodes;						//图所含顶点数

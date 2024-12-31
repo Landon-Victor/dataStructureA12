@@ -40,9 +40,7 @@ bool Add::loadFromFile(const string& filename)
         cerr << "无法打开文件: " << filename << endl;
         return false;
     }
-
     g.clear();
-
     string line;
     size_t pos;
     while (getline(curFile, line))
@@ -52,7 +50,6 @@ bool Add::loadFromFile(const string& filename)
         {
             continue;
         }
-
         // 获取节点值并添加
         int nodeValue = stoi(line.substr(0, pos));
         g.addNode(nodeValue);
@@ -138,56 +135,44 @@ void Add::inputGraph()
             cin.clear();
             while (cin.get() != '\n')
                 continue;
-            printf("！！！非法输入！！！\n请重新输入！\n");
+            printf("！！！非法输入！！！\n将重新输入！\n");
             --i;
         }
     }
     cout << "请输入边的数量: "; 
     int num=0;
-    while (true) 
+    while (1)
     {
-        if (cin >> num) break;
-        else
+        cin >> num;
+        if (cin.fail())
         {
             cin.clear();
             while (cin.get() != '\n')
                 continue;
             printf("！！！非法输入！！！\n请重新输入！\n");
         }
+        else if (num > g.numNodes * (g.numNodes - 1) / 2)
+            cout << "边的值不合法,请重新输入\n";
+        else
+            //唯一出口
+            break;
     }
     // 输入每条边
     for (int i = 0; i < num; ++i) 
     {
-        int u, v;
+        int u=0, v=0;
         cout << "请输入边 " << i + 1 << " 的两个端点的编号 (格式: u v): ";
-        while (true)
+        while (!(cin >> u >> v))
         {
-            cout << "aaa";
-            if (cin >> u >> v) 
-            {
-                if (u <= 0 || u > g.numNodes) 
-                {
-                    cout << "！！！非法输入！！！\n请重新输入\n";
-                }
-                else if (v <= 0 || v > g.numNodes)
-                {
-                    cout << "！！！非法输入！！！\n请重新输入\n";
-                }
-                else
-                {
-                    g.addEdge(u - 1, v - 1);
-                    //while循环唯一出口
-                    break;
-                }
-            }
-            else
-            {
-                cin.clear();
-                while (cin.get() != '\n')
-                    continue;
-                printf("！！！非法输入！！！\n请重新输入！\n");
-            }
-            cout << "请输入边 " << i + 1 << " 的两个端点的编号 (格式: u v): ";
+            cin.clear();
+            while (cin.get() != '\n')
+                continue;
+            printf("！！！非法输入！！！\n请重新输入！\n");
+        }
+        if (!g.addEdge(u - 1, v - 1)) 
+        {
+            cout << "该边输入失败，将重新输入\n";
+            --i;
         }
     }
     cout << "图输入完成!!!" << endl;

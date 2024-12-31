@@ -5,7 +5,7 @@ using namespace std;
 class Add
 {
 public:
-	Add(const Graph&g);
+	Add(const Graph& g);
 	~Add();
 	void display();
 	bool loadFromFile(const string& filename);		//从文件读取数据
