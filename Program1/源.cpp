@@ -27,7 +27,6 @@ int main()
 			{
 			case 1:
 			{
-				Add add(g);
 				int minNodes, maxNodes, maxEdges;
 				std::cout << "请输入最小节点数 (minNodes): ";
 				std::cin >> minNodes;
@@ -40,6 +39,7 @@ int main()
 					std::cout << "尝试进行随机图输入..." << std::endl;
 					if (add.randomInput(minNodes, maxNodes, maxEdges)) {
 						std::cout << "已完成随机图输入，可进行后续操作。" << std::endl;
+						inputFlag = true;
 					}
 					else {
 						std::cout << "随机图输入失败，请重新选择操作方式！" << std::endl;
@@ -48,6 +48,7 @@ int main()
 				else {
 					std::cout << "输入不合法，请确保 0 <= minNodes <= maxNodes 且 maxEdges >= 0。" << std::endl;
 				}
+				
 				break;
 			}
 			case 2:
@@ -152,7 +153,6 @@ int main()
 					else
 					{
 						jus = add.g.editNode(n, newval);
-						cout << "修改成功\n";
 					}
 				}
 				control = false;
@@ -270,7 +270,7 @@ int main()
 				cout << "请输入关节点的序号:";
 				cin >> n;
 				add.g.articulareModify(n);
-			    control = false;;
+			    control = false;
 				break;
 			}
 			case 11:
@@ -282,6 +282,7 @@ int main()
 				{
 					cerr<<"生成图失败\n";
 				}
+				control = false;
 				break;
 			}
 			default:

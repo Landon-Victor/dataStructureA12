@@ -179,41 +179,42 @@ void Add::inputGraph()
 }
 
 bool Add::randomInput(int minNodes, int maxNodes, int maxEdges) {
+    g.clear();
     // 设置随机数种子，保证每次运行生成的随机序列不同（基于当前时间
     srand(static_cast<unsigned int>(time(nullptr)));
 
     // 随机生成节点数量，范围在minNodes到maxNodes之间
-    int numNodes = rand() % (maxNodes - minNodes + 1) + minNodes;
-    g.clear();
-
+    g.numNodes = rand() % (maxNodes - minNodes + 1) + minNodes;
+    cout << g.numNodes;
     // 随机生成每个节点的值，并添加节点
-    for (int i = 0; i < numNodes; ++i) {
-        int nodeValue = i; 
-        g.addNode(nodeValue);
+    for (int i = 0; i < g.numNodes; ++i) 
+    { 
+        g.vertexNodes[i].val = i;
     }
 
     // 先构建一个连通的初始图结构（例如生成一个树状结构保证连通）
-    for (int i = 1; i < numNodes; ++i) {
-        g.addEdge(g.vertexNodes[0].val, g.vertexNodes[i].val);
+    for (int i = 1; i < g.numNodes; ++i) {
+        g.addEdge(0, i);
     }
-    int currentEdges = numNodes - 1; // 已有的边数量（初始连通结构的边数）
-
+    int currentEdges = g.numNodes - 1; // 已有的边数量（初始连通结构的边数）
     // 随机生成剩余边的数量，范围在0到（maxEdges - currentEdges）之间，确保总边数不超过maxEdges且能保证连通性
     int remainingEdges = rand() % (maxEdges - currentEdges + 1);
     int numEdges = currentEdges + remainingEdges;
 
     // 随机添加剩余的边，要确保边连接的节点是已存在的节点，且添加后图依然保持连通
-    for (int i = currentEdges; i < numEdges; ++i) {
+    for (int i = currentEdges; i < numEdges; ++i) 
+    {
         int u, v;
-        u = rand() % numNodes;
-        v = rand() % numNodes;
+        u = rand() % g.numNodes;
+        v = rand() % g.numNodes;
+        cout << u << v;
         while (u == v||u==0||v==0) { // 避免自环边，重新选择节点
-           v = rand() % numNodes;
-           u = rand() % numNodes;
+           v = rand() % g.numNodes;
+           u = rand() % g.numNodes;
         }
-        g.vertexNodes[u].val = u;
-        g.vertexNodes[v].val = v;
-        g.addEdge(g.vertexNodes[u].val, g.vertexNodes[v].val);
+        /*g.vertexNodes[u].val = u;
+        g.vertexNodes[v].val = v;*/
+        g.addEdge(u, v);
     }
     return true;
 }

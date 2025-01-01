@@ -109,7 +109,7 @@ bool Graph::addEdge(int index1, int index2) {
 		return false;
 	}
 	addEdgeonly(index1, index2);
-	cout << "边 (" << index1+1 << "号---" << index2+1 << "号) 添加成功！\n";
+	cout << "边 (" << index1 + 1 << "号---" << index2 + 1 << "号) 添加成功！\n";
 	return true;
 }
 //通过val值查找节点的角标
@@ -267,7 +267,6 @@ bool Graph::isConnected()
 	for (int i = 0;i <= numNodes - 1;i++)
 		visited[i] = false;
 	dfsConnected(0, counts, visited);
-	delete visited;
 	if (counts == numNodes) {
 		return true;
 	}
