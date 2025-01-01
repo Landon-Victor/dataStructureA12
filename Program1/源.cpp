@@ -27,15 +27,75 @@ int main()
 			{
 			case 1:
 			{
+				/*从文件读入*/
+				string filename;
+				cout << "请输入文件名:";
+				cin >> filename;
+				filename += ".txt";
+				inputFlag = add.loadFromFile(filename);
+				break;
+			}
+			case 2:
+			{
+				/*人工输入*/
+				add.inputGraph();
+				string filename;
+				cout << "请输入你需要保存的文件名";
+				cin >> filename;
+				filename += ".txt";
+				add.saveToFile(filename);
+				inputFlag = true;
+				break;
+			}
+			case 3:
+			{
+				cout << "请输入最小节点数 (minNodes): ";
 				int minNodes, maxNodes, maxEdges;
-				std::cout << "请输入最小节点数 (minNodes): ";
-				std::cin >> minNodes;
-				std::cout << "请输入最大节点数 (maxNodes): ";
-				std::cin >> maxNodes;
-				std::cout << "请输入最大边数 (maxEdges): ";
-				std::cin >> maxEdges;
-
-				if (minNodes >= 0 && maxNodes >= minNodes && maxEdges >= 0) {
+				while (!(cin >> minNodes))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+					cout << "请输入最小节点数 (minNodes): ";
+				}
+				/*if (minNodes <= 0)
+				{
+					printf("!!!请输入合规的数字");
+					Sleep(2000);
+					break;
+				}*/
+				/*cin >> minNodes;*/
+				cout << "请输入最大节点数 (maxNodes): ";
+				while (!(cin >> maxNodes))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+					cout << "请输入最大节点数 (minNodes): ";
+				}
+				/*if (maxNodes <= 0||maxNodes<minNodes)
+				{
+					printf("!!!请输入合规的数字");
+					Sleep(2000);
+					break;
+				}*/
+				cout << "请输入最大边数 (maxEdges): ";
+				while (!(cin >> maxEdges))
+				{
+					cin.clear();
+					while (cin.get() != '\n')
+						continue;
+					printf("！！！非法输入！！！\n请重新输入！\n");
+					cout << "请输入最dabian数 (maxEdges): ";
+				}
+				/*if (maxEdges <= 0)
+				{
+					printf("!!!请输入合规的数字");
+					break;
+				}*/
+				if (minNodes > 0 && maxNodes >= minNodes && maxEdges > 0) {
 					std::cout << "尝试进行随机图输入..." << std::endl;
 					if (add.randomInput(minNodes, maxNodes, maxEdges)) {
 						std::cout << "已完成随机图输入，可进行后续操作。" << std::endl;
@@ -46,31 +106,10 @@ int main()
 					}
 				}
 				else {
-					std::cout << "输入不合法，请确保 0 <= minNodes <= maxNodes 且 maxEdges >= 0。" << std::endl;
+					cout << "输入不合法，请确保 0 <= minNodes <= maxNodes 且 maxEdges >= 0。" << endl;
+					Sleep(2000);
 				}
-				
-				break;
-			}
-			case 2:
-			{
-				/*从文件读入*/
-				string filename;
-				cout << "请输入文件名:";
-				cin >> filename;
-				filename += ".txt";
-				inputFlag = add.loadFromFile(filename);
-				break;
-			}
-			case 3:
-			{
-				/*人工输入*/
-				add.inputGraph();
-				string filename;
-				cout << "请输入你需要保存的文件名";
-				cin >> filename;
-				filename += ".txt";
-				add.saveToFile(filename);
-				inputFlag = true;
+
 				break;
 			}
 			default:
@@ -276,7 +315,7 @@ int main()
 			    control = false;
 				break;
 			}
-			case 11:
+			/*case 11:
 			{
 				cout << "请输入无向图存储文件名称\n";
 				string filename1;
@@ -287,7 +326,7 @@ int main()
 				}
 				control = false;
 				break;
-			}
+			}*/
 			default:
 				cout << "default";
 				cin.clear();

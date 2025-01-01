@@ -24,9 +24,9 @@ void Add::display()
 {
 	printf(" ******************操   作****************\n");
 	printf("                 -1.退出\n");
-	printf("                 1.随机读入\n");
-	printf("                 2.文件读入\n");
-	printf("                 3.人工输入\n");
+	printf("                 1.文件读入\n");
+	printf("                 2.人工输入\n");
+	printf("                 3.随机读入\n");
 	printf(" ******************************************\n");
 	printf("\n");
 }
@@ -104,15 +104,21 @@ void Add::inputGraph()
 {
     g.clear();
 
-    cout << "请输入节点数量: ";
+   
     while (true)
     {
+        cout << "请输入节点数量: ";
         if (cin >> g.numNodes)
         {
             if (g.numNodes > MAX_VEX)
             {
                 cerr << "节点数量超过最大限制: " << MAX_VEX << endl;
                 cout << "请重新输入:";
+            }
+            else if (g.numNodes <= 0)
+            {
+                cout << "输入非法，请输入大于零的数字\n";
+                continue;
             }
             else break;
         }

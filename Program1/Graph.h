@@ -35,7 +35,7 @@ public:
 	bool deleteEdge(int val1, int val2);		//删除边
 	bool isConnected();                         //确认图连通
 	void dfsConnected(int u, int& counts, bool visited[]);   //确认图连通辅助
-	bool plot(string filename1);
+//	bool plot(string filename1);
 
 	int searchPoint(int n);         //通过val值查找点的下标
 
