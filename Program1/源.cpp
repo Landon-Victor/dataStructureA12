@@ -3,6 +3,7 @@
 #include"Graph.h"
 #include"Add.h"
 
+
 using namespace std;
 
 int main()
@@ -113,6 +114,7 @@ int main()
 				printf("                 8.查询某结点信息\n");
 				printf("                 9.查询统计关节点\n");
 				printf("                 10.将关节点转化为非关节点\n");
+				printf("                 11.无向图可视化\n");
 				printf(" ******************************************\n");
 				printf("\n");
 			}
@@ -269,6 +271,17 @@ int main()
 				cin >> n;
 				add.g.articulareModify(n);
 			    control = false;;
+				break;
+			}
+			case 11:
+			{
+				cout << "请输入无向图存储文件名称\n";
+				string filename1;
+				cin >> filename1;
+				if (!(add.g.plot(filename1)))
+				{
+					cerr<<"生成图失败\n";
+				}
 				break;
 			}
 			default:
