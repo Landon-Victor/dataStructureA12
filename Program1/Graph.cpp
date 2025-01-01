@@ -192,7 +192,7 @@ bool Graph::deleteEdge(int index1, int index2)
 	}
 	while (temp != nullptr && !flag)
 	{
-		if (temp->adjvex == index2)
+		if (temp->adjvex == index1)
 		{
 			temp1->next = temp->next;
 			break;

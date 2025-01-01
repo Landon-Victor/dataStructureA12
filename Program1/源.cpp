@@ -173,6 +173,7 @@ int main()
 					cout << "添加新节点失败";
 				else
 					cout << "添加新节点成功\n";
+				control = false;
 				break;
 			}
 			case 5:
@@ -191,6 +192,7 @@ int main()
 					cout << "添加新边失败";
 				else
 					cout << "添加边成功\n";
+				control = false;
 				break;
 			}
 			case 6:
@@ -206,6 +208,7 @@ int main()
 				}
 				if (!(add.g.deleteNode(n - 1)))
 					cout << "删除结点失败";
+				control = false;
 				break;
 			}
 			case 7:
